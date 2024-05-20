@@ -1,0 +1,106 @@
+En el fichero familia.pl:
+	- 5 clausulas
+	- 3 predicados
+
+* variables empiezan por mayusculas
+
+
+
+1) arrancar intérprete:
+	swipl
+
+2) cargar fichero .pl
+	?- [familia].
+
+3) hacer querys
+	// obtenir la mare de maria
+	?- mare(maria,M).
+	M = angela.
+	
+	// obtenir tots els fills de angela
+	?- mare(F,angela).
+	F = joan
+	F = maria.
+	
+	?- mare(F,M)
+	F = joan 
+	M = angela
+	F = maria
+	M = angela
+	
+	// obtenir les ties de la maria
+	?- tia(maria,T)
+	T = cris
+	T = judith.
+	
+	// obtenir els sobrins de judith
+	?- tia(N,judith).
+	N = joan
+	N = maria.
+	
+	// la cris es tia del joan?
+	?- tia(joan,cris).
+	true ;
+
+
+Unificació: intentar que dos termes instanciin les variables amb el mateix valor
+
+
+En prolog els termes son per exemple (es crea un arbre):
+
+- f(X,a) 
+- f(b,Y)
+- f(X,a) = f(b,Y)
+- tia(N,T) :- mare(N,M), germana(M,T). 
+
+
+LListes:
+	[a,b,c|L] --> els 3 primers elements y la cua L (pot ser una llista buida o amb mes elements)
+
+
+Exercicis:
+
+1)
+% pert(E,L) "l'element E pertany a la llista L"
+
+pert(X,[X]).  % l'element X pertany a una llista que nomes el conte a ell --> no caldria
+pert(X,[Y|L]) :- X = Y  --> pert(X,[X|L]).  -->  pert(X,[X|_]).
+pert(X,[_|L]) :- pert(X,L).
+
+
+2)
+% concat(L1,L2,L3) "la concatenació les llistes L1 i L2 és la llista L3"
+% concat([a,b], L2, [a,b,l]). --> quina llista concatenada amb [a,b] dona [a,b,l] ?
+% concat(L1,L2,[1,2,3]) --> dona totes les combinacions de L1 i L2 que la seva concatenació dona [1,2,3]
+
+concat([],L,L).
+concat([X|L1],L2,[X|L3]) :- concat(L1,L2,L3).
+
+
+3)
+% pert_amb_resta(E,L,R) "l'element E pertany a la llista L, i la llista R conté els elements de L excepte E"
+
+
+4) Factorial (has de donar la N)
+fact(0,1)
+fact(N,F) :-
+	N1 is N-1,
+	fact(N1,F1),
+	F is N*F1.
+	
+--> quan entra en fact 0 entra igualment al segon predicat --> falla --> solució:
+fact(0,1)
+fact(N,F) :-
+	N > 0,
+	N1 is N-1,
+	fact(N1,F1),
+	F is N*F1.
+	
+	
+
+
+
+
+
+
+
